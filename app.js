@@ -30,6 +30,8 @@ const startGameBtn = document.getElementById("start-game-btn");
 // console.log(!!theInput);
 
 //! FIRST WAY
+//! DECLRATION SYNTAX
+
 // function getPlayerChoice() {
 // 	while (!userInput || !theInput || theInput < 1 || theInput > 3) {
 // 		const userInput = prompt(
@@ -68,13 +70,13 @@ const DRAW = "DRAW";
 
 let gameIsRunning = false;
 
+//! EXPRESSION SYNTAX
 const getMachineChoice = function () {
 	const machineSelectOptions = [ROCK, PAPER, SCISSORS];
 	return machineSelectOptions[
 		Math.floor(Math.random() * machineSelectOptions.length)
 	];
 };
-// console.log(`machine choice: ${getMachineChoice}`);
 
 const getPlayerChoice = function () {
 	let selection = prompt(
@@ -96,41 +98,30 @@ const getPlayerChoice = function () {
 	return selection;
 };
 
-// console.log(`getPlayerChoice: ${getPlayerChoice()}`);
-
-const getWinner = function (userChoice, machineSelect) {
-	if (userChoice === machineSelect) {
-		alert(
-			`It is a ${DRAW}!
-			${userChoice} agianst ${machineSelect}`
-		);
-	} else if (
-		(userChoice === ROCK && machineSelect === SCISSORS) ||
-		(userChoice === SCISSORS && machineSelect === PAPER) ||
-		(userChoice === PAPER && machineSelect === ROCK)
-	) {
-		alert(`${PLAYER_WIN} WON!
-             ${userChoice} against ${machineSelect}`);
-	} else {
-		alert(`${MACHINE_WIN} WON!
-            ${machineSelect} against ${userChoice}`);
-	}
+const getWinner = (userChoice, machineSelect) => {
+	userChoice === machineSelect
+		? alert(
+				`It is a ${DRAW}!
+        ${userChoice} agianst ${machineSelect}`
+		  )
+		: (userChoice === ROCK && machineSelect === SCISSORS) ||
+		  (userChoice === SCISSORS && machineSelect === PAPER) ||
+		  (userChoice === PAPER && machineSelect === ROCK)
+		? alert(`${PLAYER_WIN} WON!
+        ${userChoice} against ${machineSelect}`)
+		: alert(`${MACHINE_WIN} WON!
+        ${machineSelect} against ${userChoice}`);
 };
-
-// const person = {
-// 	// Method: function attach to an object
-// 	greet: function greet() {
-// 		console.log("Hello!");
-// 	},
-// };
-
-// person.greet();
-// console.dir(startGame);
 
 startGameBtn.addEventListener("click", function () {
 	if (gameIsRunning) {
 		return;
 	}
 	gameIsRunning = true;
-	getWinner(getPlayerChoice(), getMachineChoice());
+	// getWinner(getPlayerChoice(), getMachineChoice());
+	const userChoice = getPlayerChoice();
+	const machineSelect = getMachineChoice();
+	console.log(`M: ${machineSelect}`);
+
+	getWinner(userChoice, machineSelect);
 });
