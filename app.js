@@ -98,7 +98,8 @@ const getPlayerChoice = function () {
 	return selection;
 };
 
-const getWinner = (userChoice, machineSelect) => {
+const getWinner = (userChoice, machineSelect) =>
+	//OMMIT Return; in () => {} with turnnury
 	userChoice === machineSelect
 		? alert(
 				`It is a ${DRAW}!
@@ -111,7 +112,6 @@ const getWinner = (userChoice, machineSelect) => {
         ${userChoice} against ${machineSelect}`)
 		: alert(`${MACHINE_WIN} WON!
         ${machineSelect} against ${userChoice}`);
-};
 
 startGameBtn.addEventListener("click", function () {
 	if (gameIsRunning) {
