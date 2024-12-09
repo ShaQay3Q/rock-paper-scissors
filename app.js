@@ -62,6 +62,11 @@ const ROCK = "ROCK";
 const PAPER = "PAPER";
 const SCISSORS = "SCISSORS";
 const DEFAUL_CHOICE = ROCK;
+const PLAYER_WIN = "YOU";
+const MACHINE_WIN = "MACHINE";
+const DRAW = "DRAW";
+
+let gameIsRunning = false;
 
 const getMachineChoice = function () {
 	const machineSelectOptions = [ROCK, PAPER, SCISSORS];
@@ -93,23 +98,22 @@ const getPlayerChoice = function () {
 
 // console.log(`getPlayerChoice: ${getPlayerChoice()}`);
 
-const playTheGame = function (userChoice, machineSelect) {
-	if (
+const getWinner = function (userChoice, machineSelect) {
+	if (userChoice === machineSelect) {
+		alert(
+			`It is a ${DRAW}!
+			${userChoice} agianst ${machineSelect}`
+		);
+	} else if (
 		(userChoice === ROCK && machineSelect === SCISSORS) ||
 		(userChoice === SCISSORS && machineSelect === PAPER) ||
 		(userChoice === PAPER && machineSelect === ROCK)
 	) {
-		alert(`Your ${userChoice} won against Machine's ${machineSelect}`);
-	} else if (
-		(machineSelect === ROCK && userChoice === SCISSORS) ||
-		(machineSelect === SCISSORS && userChoice === PAPER) ||
-		(machineSelect === PAPER && userChoice === ROCK)
-	) {
-		alert(`Machine's ${machineSelect} won against your ${userChoice}`);
+		alert(`${PLAYER_WIN} WON!
+             ${userChoice} against ${machineSelect}`);
 	} else {
-		alert(
-			`With your ${userChoice} agianst Machine's ${machineSelect}, it is a DRAW!`
-		);
+		alert(`${MACHINE_WIN} WON!
+            ${machineSelect} against ${userChoice}`);
 	}
 };
 
@@ -124,5 +128,9 @@ const playTheGame = function (userChoice, machineSelect) {
 // console.dir(startGame);
 
 startGameBtn.addEventListener("click", function () {
-	playTheGame(getPlayerChoice(), getMachineChoice());
+	if (gameIsRunning) {
+		return;
+	}
+	gameIsRunning = true;
+	getWinner(getPlayerChoice(), getMachineChoice());
 });
