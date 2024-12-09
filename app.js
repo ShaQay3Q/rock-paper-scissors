@@ -61,11 +61,15 @@ const startGameBtn = document.getElementById("start-game-btn");
 const ROCK = "ROCK";
 const PAPER = "PAPER";
 const SCISSORS = "SCISSORS";
+const DEFAUL_CHOICE = ROCK;
 
-const machineSelectOptions = [ROCK, PAPER, SCISSORS];
-const autoSelect =
-	machineSelectOptions[Math.floor(Math.random() * machineSelectOptions.length)];
-// console.log(autoSelect);
+const getMachineChoice = function () {
+	const machineSelectOptions = [ROCK, PAPER, SCISSORS];
+	return machineSelectOptions[
+		Math.floor(Math.random() * machineSelectOptions.length)
+	];
+};
+// console.log(`machine choice: ${getMachineChoice}`);
 
 const getPlayerChoice = function () {
 	let selection = prompt(
@@ -75,30 +79,36 @@ const getPlayerChoice = function () {
             "Scissors"`,
 		""
 	).toUpperCase();
-	console.log(selection);
+
+	console.log(`selection: ${selection}`);
 
 	if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
-		alert("Invalid choice! We chose 'ROCK' for you.");
+		alert(`Invalid choice! We chose ${DEFAUL_CHOICE} for you.`);
+		selection = DEFAUL_CHOICE;
 	}
-	selection = "ROCK";
-	console.log(ROCK);
 	console.log(selection);
 
+	return selection;
+};
+
+// console.log(`getPlayerChoice: ${getPlayerChoice()}`);
+
+const playTheGame = function (userChoice, machineSelect) {
 	if (
-		(selection === ROCK && autoSelect === SCISSORS) ||
-		(selection === SCISSORS && autoSelect === PAPER) ||
-		(selection === PAPER && autoSelect === ROCK)
+		(userChoice === ROCK && machineSelect === SCISSORS) ||
+		(userChoice === SCISSORS && machineSelect === PAPER) ||
+		(userChoice === PAPER && machineSelect === ROCK)
 	) {
-		alert(`Your ${selection} won against Machine's ${autoSelect}`);
+		alert(`Your ${userChoice} won against Machine's ${machineSelect}`);
 	} else if (
-		(autoSelect === ROCK && selection === SCISSORS) ||
-		(autoSelect === SCISSORS && selection === PAPER) ||
-		(autoSelect === PAPER && selection === ROCK)
+		(machineSelect === ROCK && userChoice === SCISSORS) ||
+		(machineSelect === SCISSORS && userChoice === PAPER) ||
+		(machineSelect === PAPER && userChoice === ROCK)
 	) {
-		alert(`Machine's ${autoSelect} won against your ${selection}`);
+		alert(`Machine's ${machineSelect} won against your ${userChoice}`);
 	} else {
 		alert(
-			`With your ${selection} agianst Machine's ${autoSelect}, it is a DRAW!`
+			`With your ${userChoice} agianst Machine's ${machineSelect}, it is a DRAW!`
 		);
 	}
 };
@@ -113,4 +123,6 @@ const getPlayerChoice = function () {
 // person.greet();
 // console.dir(startGame);
 
-startGameBtn.addEventListener("click", getPlayerChoice);
+startGameBtn.addEventListener("click", function () {
+	playTheGame(getPlayerChoice(), getMachineChoice());
+});
