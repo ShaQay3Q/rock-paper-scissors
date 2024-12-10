@@ -91,14 +91,14 @@ const getPlayerChoice = function () {
 
 	if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
 		alert(`Invalid choice! We chose ${DEFAUL_CHOICE} for you.`);
-		selection = DEFAUL_CHOICE;
+		return;
 	}
 	console.log(selection);
 
 	return selection;
 };
 
-const getWinner = (userChoice, machineSelect) =>
+const getWinner = (machineSelect, userChoice = DEFAUL_CHOICE) =>
 	//OMMIT Return; in () => {} with turnnury
 	userChoice === machineSelect
 		? DRAW
@@ -108,20 +108,18 @@ const getWinner = (userChoice, machineSelect) =>
 		? PLAYER_WIN
 		: MACHINE_WIN;
 
-const declareResult = (input, pChoice, mChoice) => {
-	let message = "";
+const declareResult = (input, mChoice, pChoice = DEFAUL_CHOICE) => {
+	let message = `
+	${pChoice || DEFAUL_CHOICE} agianst ${mChoice}`;
 	switch (input) {
 		case PLAYER_WIN:
-			message = `${PLAYER_WIN} WON!
-			${pChoice} agianst ${mChoice}`;
+			message = `${PLAYER_WIN} WON!` + message;
 			break;
 		case MACHINE_WIN:
-			message = `${MACHINE_WIN} WON!
-					${mChoice} agianst ${pChoice}`;
+			message = `${MACHINE_WIN} WON!` + message;
 			break;
 		case DRAW:
-			message = `It is a ${DRAW}!
-					${pChoice} agianst ${mChoice}`;
+			message = `It is a ${DRAW}!` + message;
 			break;
 	}
 	return message;
@@ -131,13 +129,26 @@ startGameBtn.addEventListener("click", function () {
 	if (gameIsRunning) {
 		return;
 	}
+
+	// DESABLE the button
 	gameIsRunning = true;
 	// getWinner(getPlayerChoice(), getMachineChoice());
 	const userChoice = getPlayerChoice();
 	const machineSelect = getMachineChoice();
 	console.log(`M: ${machineSelect}`);
 
-	const winner = getWinner(userChoice, machineSelect);
-	const message = declareResult(winner, userChoice, machineSelect);
+	let winner;
+	let message;
+	if (userChoice) {
+		winner = getWinner(machineSelect, userChoice);
+		message = declareResult(winner, machineSelect, userChoice);
+	} else {
+		winner = getWinner(machineSelect);
+		message = declareResult(winner, machineSelect);
+	}
+
 	alert(message);
+
+	// ENABLE the button
+	gameIsRunning = false;
 });
