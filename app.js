@@ -152,3 +152,24 @@ startGameBtn.addEventListener("click", function () {
 	// ENABLE the button
 	gameIsRunning = false;
 });
+
+// resultHandler is a Call Back (cb) function passed down to sumUp function
+const sumUp = (resultHandler, ...number) => {
+	const validateNumber = (number) => (isNaN(number) ? 0 : number);
+	let sum = 0;
+	for (const num of number) {
+		sum += validateNumber(num);
+	}
+
+	// Function or Pointer at a function
+	resultHandler(sum);
+	return sum;
+};
+
+const showResult = (result) => {
+	alert(`The result after adding all the numbers is ${result}`);
+};
+
+console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10));
+console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, 88));
+console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, -88));
