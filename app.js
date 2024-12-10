@@ -139,7 +139,7 @@ startGameBtn.addEventListener("click", function () {
 
 	let winner;
 	let message;
-	if (userChoice) {
+	if (!!userChoice) {
 		winner = getWinner(machineSelect, userChoice);
 		message = declareResult(winner, machineSelect, userChoice);
 	} else {
