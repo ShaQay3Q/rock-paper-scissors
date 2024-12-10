@@ -64,7 +64,7 @@ const ROCK = "ROCK";
 const PAPER = "PAPER";
 const SCISSORS = "SCISSORS";
 const DEFAUL_CHOICE = ROCK;
-const PLAYER_WIN = "YOU";
+const PLAYER_WIN = "PLAYER";
 const MACHINE_WIN = "MACHINE";
 const DRAW = "DRAW";
 
@@ -101,17 +101,31 @@ const getPlayerChoice = function () {
 const getWinner = (userChoice, machineSelect) =>
 	//OMMIT Return; in () => {} with turnnury
 	userChoice === machineSelect
-		? alert(
-				`It is a ${DRAW}!
-        ${userChoice} agianst ${machineSelect}`
-		  )
+		? DRAW
 		: (userChoice === ROCK && machineSelect === SCISSORS) ||
 		  (userChoice === SCISSORS && machineSelect === PAPER) ||
 		  (userChoice === PAPER && machineSelect === ROCK)
-		? alert(`${PLAYER_WIN} WON!
-        ${userChoice} against ${machineSelect}`)
-		: alert(`${MACHINE_WIN} WON!
-        ${machineSelect} against ${userChoice}`);
+		? PLAYER_WIN
+		: MACHINE_WIN;
+
+const declareResult = (input, pChoice, mChoice) => {
+	let message = "";
+	switch (input) {
+		case PLAYER_WIN:
+			message = `${PLAYER_WIN} WON!
+			${pChoice} agianst ${mChoice}`;
+			break;
+		case MACHINE_WIN:
+			message = `${MACHINE_WIN} WON!
+					${mChoice} agianst ${pChoice}`;
+			break;
+		case DRAW:
+			message = `It is a ${DRAW}!
+					${pChoice} agianst ${mChoice}`;
+			break;
+	}
+	return message;
+};
 
 startGameBtn.addEventListener("click", function () {
 	if (gameIsRunning) {
@@ -123,5 +137,7 @@ startGameBtn.addEventListener("click", function () {
 	const machineSelect = getMachineChoice();
 	console.log(`M: ${machineSelect}`);
 
-	getWinner(userChoice, machineSelect);
+	const winner = getWinner(userChoice, machineSelect);
+	const message = declareResult(winner, userChoice, machineSelect);
+	alert(message);
 });
