@@ -162,14 +162,27 @@ const sumUp = (resultHandler, ...number) => {
 	}
 
 	// Function or Pointer at a function
-	resultHandler(sum);
+	resultHandler(sum, "The result of aaddition is:");
 	return sum;
 };
 
-const showResult = (result) => {
-	alert(`The result after adding all the numbers is ${result}`);
+const showResult = (result, messageText) => {
+	{
+		alert(`${messageText} ${result}`);
+	}
+};
+
+const subtractUp = function (resultHandler, ...numbers) {
+	let sum = 0;
+	for (const num of numbers) {
+		sum -= num;
+	}
+
+	resultHandler(sum, "The result of substraction is:");
+	return sum;
 };
 
 console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10));
 console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, 88));
 console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, -88));
+console.log(subtractUp(showResult, 1, 5, 10, -3, 6, 10));
