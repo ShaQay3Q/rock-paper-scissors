@@ -162,27 +162,70 @@ const sumUp = (resultHandler, ...number) => {
 	}
 
 	// Function or Pointer at a function
-	resultHandler(sum, "The result of aaddition is:");
+	resultHandler("The result of addition is:", sum);
 	return sum;
 };
 
-const showResult = (result, messageText) => {
+const showResult = (messageText, result) => {
 	{
 		alert(`${messageText} ${result}`);
 	}
 };
 
 const subtractUp = function (resultHandler, ...numbers) {
+	const validateNumber = (number) => (isNaN(number) ? 0 : number);
 	let sum = 0;
 	for (const num of numbers) {
-		sum -= num;
+		sum -= validateNumber(num);
 	}
 
-	resultHandler(sum, "The result of substraction is:");
+	resultHandler("The result of substraction is:", sum);
 	return sum;
 };
 
-console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10));
+const calc = (resultHandler, operation, ...numbers) => {
+	const validateNumber = (number) => (isNaN(number) ? 0 : number);
+
+	let sum = 0;
+	for (const num of numbers) {
+		switch (operation) {
+			case "+":
+				sum += validateNumber(num);
+				break;
+			case "-":
+				sum -= validateNumber(num);
+				break;
+		}
+	}
+
+	// Appended as the last argiment
+	resultHandler(sum);
+	return sum;
+};
+
+console.log(
+	calc(
+		showResult.bind(this, `The result of addition is: `),
+		"+",
+		1,
+		5,
+		10,
+		-3,
+		6,
+		10
+	)
+);
 console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, 88));
-console.log(sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, -88));
-console.log(subtractUp(showResult, 1, 5, 10, -3, 6, 10));
+console.log(subtractUp(showResult, 1, 5, 10, -3, 6, 10, 25, -88));
+console.log(
+	calc(
+		showResult.bind(this, `The result of substraction is: `),
+		"-",
+		1,
+		5,
+		10,
+		-3,
+		6,
+		10
+	)
+);
